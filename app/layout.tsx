@@ -4,7 +4,7 @@ import "@/assets/styles/globals.css";
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Prostore",
   description: "A modern store built with Next.js, ShadCN, and Prisma.",
 };
