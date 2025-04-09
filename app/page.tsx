@@ -101,9 +101,10 @@
 //     </div>
 //   );
 // }
+import { Button } from "@/components/ui/button";
 
 const HomePage = () => {
-  return <>Latest Products</>;
+  return <>Prostore</>;
 };
 
 export default HomePage;
