@@ -20,3 +20,4 @@ CREATE TABLE "Product" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "product_slug_idx" ON "Product"("slug");
+
