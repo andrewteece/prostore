@@ -33,7 +33,7 @@ const CredentialsSignInForm = () => {
           </div>
           <div>
             <Button className='w-full' variant='default'>
-              Sign In with credentials
+              Sign In 
             </Button>
           </div>
   
