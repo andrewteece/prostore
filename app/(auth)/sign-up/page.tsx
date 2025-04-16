@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/card';
 import { APP_NAME } from "@/lib/constants";
 import { auth } from "@/auth";
-import { redirect } from "next/dist/server/api-utils";
+import { redirect } from "next/navigation";
 import SignUpForm from "./credentials-signin-form";
 
 export const metadata: Metadata = {
