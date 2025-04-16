@@ -63,15 +63,20 @@ export async function signUp(prevState: unknown, formData: FormData) {
       password: plainPassword,
     });
 
-    return { success: true, message: 'User created successfully' };
+    return { success: true, message: 'User registered successfully' };
   } catch (error) {
+    // console.log(error.name);
+    // console.log(error.code);
+    // console.log(error.errors);
+    // console.log(error.meta?.target);
+
     if (isRedirectError(error)) {
       throw error;
     }
 
     return {
       success: false,
-      message: 'Something went wrong',
+      message: formatError(error),
     };
   }
 }
