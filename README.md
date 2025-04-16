@@ -1,6 +1,6 @@
 # Next.js Ecommerce
 
-## Tech Stack Use:
+## Tech Stack Used:
 - Next.js 15
 - React 19
 - PostgreSQL
