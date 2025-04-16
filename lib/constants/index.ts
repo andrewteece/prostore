@@ -14,8 +14,8 @@ export const SERVER_URL =
   };
   
   export const signUpDefaultValues = {
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    name: 'Andrew Teece',
+    email: 'andrew@example.com',
+    password: '123456',
+    confirmPassword: '123456',
   };
