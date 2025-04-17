@@ -21,30 +21,32 @@ const AddToCart = ({ item }: { item: Omit<CartItem, 'cartId'> }) => {
   
     // Display appropriate toast message based on the result
     if (!res.success) {
-      toast({
-        variant: 'destructive',
-        description: res.message,
-      });
+     toast.error(res.message, {
+        style: {
+          backgroundColor: 'red',
+          color: 'white',
+        },
+       description: res.message
+     });
       return;
     }
   
-    toast({
+    toast.success("Item added", {
       description: `${item.name} added to the cart`,
       action: (
-        <Toaster
+        <Button
           className='bg-primary text-white hover:bg-gray-800'
           onClick={() => router.push('/cart')}
-          altText='Go to cart'
         >
           Go to cart
-        </Toaster>
+        </Button>
       ),
     });
   };
 
     return (
       <Button className='w-full' type='button' onClick={handleAddToCart}>
-    <Plus />
+    {/* <Plus /> */}
     Add to cart
   </Button>
     )
