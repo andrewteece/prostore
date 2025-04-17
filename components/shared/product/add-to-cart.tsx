@@ -46,7 +46,7 @@ const AddToCart = ({ item }: { item: Omit<CartItem, 'cartId'> }) => {
 
     return (
       <Button className='w-full' type='button' onClick={handleAddToCart}>
-    {/* <Plus /> */}
+    <Plus />
     Add to cart
   </Button>
     )
