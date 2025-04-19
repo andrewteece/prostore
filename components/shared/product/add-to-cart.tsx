@@ -50,7 +50,7 @@ const AddToCart = ({ cart, item }: { cart?: Cart; item: Omit<CartItem, 'cartId'>
 const handleRemoveFromCart = async () => {
   const res = await removeItemFromCart(item.productId);
 
-  toast({
+  toast.success("Item Removed", {
     variant: res.success ? 'default' : 'destructive',
     description: res.message,
   });
@@ -76,13 +76,6 @@ const existItem =
       Add to cart
     </Button>
   );
-
-  //   return (
-  //     <Button className='w-full' type='button' onClick={handleAddToCart}>
-  //   <Plus />
-  //   Add to cart
-  // </Button>
-  //   )
   };
   
   export default AddToCart;
