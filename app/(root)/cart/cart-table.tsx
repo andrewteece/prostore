@@ -51,7 +51,7 @@ function AddButton({ item }: { item: CartItem }) {
 }
 
 function RemoveButton({ item }: { item: CartItem }) {
-  const { toast } = useToast();
+  //   const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
   return (
     <Button
@@ -63,7 +63,7 @@ function RemoveButton({ item }: { item: CartItem }) {
           const res = await removeItemFromCart(item.productId);
 
           if (!res.success) {
-            toast({
+            toast.success({
               variant: 'destructive',
               description: res.message,
             });
