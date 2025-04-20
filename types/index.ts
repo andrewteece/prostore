@@ -3,7 +3,7 @@ import {
   cartItemSchema,
   insertCartSchema,
   insertProductSchema,
-  shippingAddressSchema
+  shippingAddressSchema,
 } from '@/lib/validator'
 
 // product types
