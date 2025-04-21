@@ -41,7 +41,7 @@ export const paypal = {
   },
 };
 
-// Generate an access token for the PayPal API
+// Generate paypal access token
 async function generateAccessToken() {
   const { PAYPAL_CLIENT_ID, PAYPAL_APP_SECRET } = process.env;
   const auth = Buffer.from(`${PAYPAL_CLIENT_ID}:${PAYPAL_APP_SECRET}`).toString(
@@ -59,14 +59,14 @@ async function generateAccessToken() {
 
   const jsonData = await handleResponse(response);
   return jsonData.access_token;
+}
 
-  async function handleResponse(response: Response) {
-    if (response.ok) {
-      return response.json();
-    } else {
-      const errorMessage = await response.text();
-      throw new Error(errorMessage);
-    }
+async function handleResponse(response: Response) {
+  if (response.ok) {
+    return response.json();
+  } else {
+    const errorMessage = await response.text();
+    throw new Error(errorMessage);
   }
 }
 
