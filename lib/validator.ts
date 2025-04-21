@@ -1,6 +1,6 @@
-import { z } from "zod";
+import { z } from 'zod';
 import { formatNumberWithDecimal } from './utils';
-import { PAYMENT_METHODS } from "./constants";
+import { PAYMENT_METHODS } from './constants';
 
 // Make sure price is formatted with two decimal places
 const currency = z
@@ -12,21 +12,24 @@ const currency = z
 
 // Schema for inserting a product
 export const insertProductSchema = z.object({
-    name: z.string().min(3, 'Name must be at least 3 characters'),
-    slug: z.string().min(3, 'Slug must be at least 3 characters'),
-    category: z.string().min(3, 'Category must be at least 3 characters'),
-    brand: z.string().min(3, 'Brand must be at least 3 characters'),
-    description: z.string().min(3, 'Description must be at least 3 characters'),
-    stock: z.coerce.number(),
-    images: z.array(z.string()).min(1, 'Product must have at least one image'),
-    isFeatured: z.boolean(),
-    banner: z.string().nullable(),
-    price: currency,
-  });
+  name: z.string().min(3, 'Name must be at least 3 characters'),
+  slug: z.string().min(3, 'Slug must be at least 3 characters'),
+  category: z.string().min(3, 'Category must be at least 3 characters'),
+  brand: z.string().min(3, 'Brand must be at least 3 characters'),
+  description: z.string().min(3, 'Description must be at least 3 characters'),
+  stock: z.coerce.number(),
+  images: z.array(z.string()).min(1, 'Product must have at least one image'),
+  isFeatured: z.boolean(),
+  banner: z.string().nullable(),
+  price: currency,
+});
 
-  // Schema for signing in a user
+// Schema for signing in a user
 export const signInFormSchema = z.object({
-  email: z.string().email('Invalid email address').min(3, 'Email must be at least 3 characters'),
+  email: z
+    .string()
+    .email('Invalid email address')
+    .min(3, 'Email must be at least 3 characters'),
   password: z.string().min(3, 'Password must be at least 3 characters'),
 });
 
@@ -45,7 +48,7 @@ export const signUpFormSchema = z
     path: ['confirmPassword'],
   });
 
-  // Schema for updating the user profile
+// Schema for updating the user profile
 export const updateProfileSchema = z.object({
   name: z.string().min(3, 'Name must be at leaast 3 characters'),
   email: z.string().min(3, 'Email must be at leaast 3 characters'),
@@ -57,7 +60,7 @@ export const updateUserSchema = updateProfileSchema.extend({
   role: z.string().min(1, 'Role is required'),
 });
 
-  // cart schemas
+// cart schemas
 export const cartItemSchema = z.object({
   productId: z.string().min(1, 'Product is required'),
   name: z.string().min(1, 'Name is required'),
@@ -65,11 +68,11 @@ export const cartItemSchema = z.object({
   qty: z.number().int().nonnegative('Quantity must be a non-negative number'),
   image: z.string().min(1, 'Image is required'),
   price: currency,
-    // .number()
-    // .refine(
-    //   (value) => /^\d+(\.\d{2})?$/.test(Number(value).toFixed(2)),
-    //   'Price must have exactly two decimal places (e.g., 49.99)'
-    // ),
+  // .number()
+  // .refine(
+  //   (value) => /^\d+(\.\d{2})?$/.test(Number(value).toFixed(2)),
+  //   'Price must have exactly two decimal places (e.g., 49.99)'
+  // ),
 });
 
 export const insertCartSchema = z.object({
@@ -81,7 +84,6 @@ export const insertCartSchema = z.object({
   sessionCartId: z.string().min(1, 'Session cart id is required'),
   userId: z.string().optional().nullable(),
 });
-
 
 // shipping address schema
 export const shippingAddressSchema = z.object({
@@ -104,7 +106,7 @@ export const paymentMethodSchema = z
     message: 'Invalid payment method',
   });
 
-  // Insert Order Schema
+// Insert Order Schema
 export const insertOrderSchema = z.object({
   userId: z.string().min(1, 'User is required'),
   itemsPrice: currency,
@@ -124,4 +126,12 @@ export const insertOrderItemSchema = z.object({
   name: z.string(),
   price: currency,
   qty: z.number(),
+});
+
+// payment result schema
+export const paymentResultSchema = z.object({
+  id: z.string(),
+  status: z.string(),
+  email_address: z.string(),
+  pricePaid: z.string(),
 });
