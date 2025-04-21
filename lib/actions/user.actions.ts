@@ -37,7 +37,15 @@ export async function signInWithCredentials(
 
   // Sign the user out
 export async function signOutUser() {
-    await signOut();
+  // get current users cart and delete it so it does not persist to next user
+  const currentCart = await getMyCart();
+
+  if (currentCart?.id) {
+    await prisma.cart.delete({ where: { id: currentCart.id } });
+  } else {
+    console.warn('No cart found for deletion.');
+  }
+  await signOut();
   }
 
   // Register a new user
