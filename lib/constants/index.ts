@@ -5,23 +5,26 @@ export const APP_DESCRIPTION =
 export const SERVER_URL =
   process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000';
 
-  export const LATEST_PRODUCTS_LIMIT =
+export const LATEST_PRODUCTS_LIMIT =
   Number(process.env.LATEST_PRODUCTS_LIMIT) || 4;
 
-  export const signInDefaultValues = {
-    email: '',
-    password: '',
-  };
-  
-  export const signUpDefaultValues = {
-    name: 'Andrew Teece',
-    email: 'andrew@example.com',
-    password: '123456',
-    confirmPassword: '123456',
-  };
+export const signInDefaultValues = {
+  email: '',
+  password: '',
+};
 
-  export const PAYMENT_METHODS = process.env.PAYMENT_METHODS
+export const signUpDefaultValues = {
+  name: 'Andrew Teece',
+  email: 'andrew@example.com',
+  password: '123456',
+  confirmPassword: '123456',
+};
+
+export const PAYMENT_METHODS = process.env.PAYMENT_METHODS
   ? process.env.PAYMENT_METHODS.split(', ')
   : ['PayPal', 'Stripe', 'CashOnDelivery'];
 export const DEFAULT_PAYMENT_METHOD =
   process.env.DEFAULT_PAYMENT_METHOD || 'PayPal';
+
+// page_size
+export const PAGE_SIZE = Number(process.env.PAGE_SIZE) || 2;
