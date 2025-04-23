@@ -34,7 +34,6 @@ const ProfileForm = () => {
 
     if (!res.success) {
       return toast.success('Update failed', {
-        // variant: 'destructive',
         description: res.message,
       });
     }
