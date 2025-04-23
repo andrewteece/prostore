@@ -2,6 +2,7 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '../ui/button';
+import { formUrlQuery } from '@/lib/utils';
 
 type PaginationProps = {
   page: number | string;
@@ -15,7 +16,14 @@ const Pagination = ({ page, totalPages, urlParamName }: PaginationProps) => {
   // Handle Page Change
   const onClick = (btnType: string) => {
     const pageValue = btnType === 'next' ? Number(page) + 1 : Number(page) - 1;
-    console.log(pageValue);
+
+    const newUrl = formUrlQuery({
+      params: searchParams.toString(),
+      key: urlParamName || 'page',
+      value: pageValue.toString(),
+    });
+
+    router.push(newUrl, { scroll: false });
   };
 
   return (
