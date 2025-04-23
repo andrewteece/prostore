@@ -65,9 +65,8 @@ const OrderDetailsTable = ({
   const handleCreatePayPalOrder = async () => {
     const res = await createPayPalOrder(order.id);
     if (!res.success)
-      toast.success({
+      toast.success('Payment failed', {
         description: res.message,
-        variant: 'destructive',
       });
     return res.data;
   };
@@ -75,9 +74,8 @@ const OrderDetailsTable = ({
   // Approves a PayPal order
   const handleApprovePayPalOrder = async (data: { orderID: string }) => {
     const res = await approvePayPalOrder(order.id, data);
-    toast.success({
+    toast.success('Success!', {
       description: res.message,
-      variant: res.success ? 'default' : 'destructive',
     });
   };
 
