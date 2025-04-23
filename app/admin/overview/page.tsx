@@ -4,8 +4,8 @@ export const metadata: Metadata = {
   title: 'Admin Dashboard',
 };
 
-const AdminDashboardPage = () => {
-  return <>Dashboard</>;
+const AdminOverviewPage = () => {
+  return <>Overview</>;
 };
 
-export default AdminDashboardPage;
+export default AdminOverviewPage;

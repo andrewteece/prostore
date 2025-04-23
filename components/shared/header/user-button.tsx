@@ -9,17 +9,22 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { signOutUser } from '@/lib/actions/user.actions';
+import { UserIcon } from 'lucide-react';
 
 const UserButton = async () => {
   const session = await auth();
-  if (!session)
-    return (
-      <Link href='/api/auth/signin'>
-        <Button>Sign In</Button>
-      </Link>
-    );
 
-  const firstInitial = session.user?.name?.charAt(0).toUpperCase() ?? '';
+  if (!session) {
+    return (
+      <Button asChild>
+        <Link href='/sign-in'>
+          <UserIcon /> Sign In
+        </Link>
+      </Button>
+    );
+  }
+
+  const firstInitial = session.user?.name?.charAt(0).toUpperCase() ?? 'U';
 
   return (
     <div className='flex gap-2 items-center'>
@@ -28,7 +33,7 @@ const UserButton = async () => {
           <div className='flex items-center'>
             <Button
               variant='ghost'
-              className='relative w-8 h-8 rounded-full ml-2 flex items-center justify-center bg-gray-300'
+              className='relativee w-8 h-8 rounded-full ml-2 flex items-center justify-center bg-gray-200'
             >
               {firstInitial}
             </Button>
@@ -37,14 +42,34 @@ const UserButton = async () => {
         <DropdownMenuContent className='w-56' align='end' forceMount>
           <DropdownMenuLabel className='font-normal'>
             <div className='flex flex-col space-y-1'>
-              <p className='text-sm font-medium leading-none'>
+              <div className='text-sm font-medium leading-none'>
                 {session.user?.name}
-              </p>
-              <p className='text-xs leading-none text-muted-foreground'>
+              </div>
+              <div className='text-sm text-muted-foreground leading-none'>
                 {session.user?.email}
-              </p>
+              </div>
             </div>
           </DropdownMenuLabel>
+
+          <DropdownMenuItem>
+            <Link href='/user/profile' className='w-full'>
+              User Profile
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link href='/user/orders' className='w-full'>
+              Order History
+            </Link>
+          </DropdownMenuItem>
+
+          {session?.user?.role === 'admin' && (
+            <DropdownMenuItem>
+              <Link href='/admin/overview' className='w-full'>
+                Admin
+              </Link>
+            </DropdownMenuItem>
+          )}
+
           {/* <DropdownMenuItem className='p-0 mb-1'> */}
           <form action={signOutUser} className='w-full'>
             <Button
