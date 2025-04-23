@@ -1,41 +1,46 @@
-'use server'
+'use server';
 
-import { isRedirectError } from "next/dist/client/components/redirect-error";
-import { auth, signIn, signOut } from "@/auth";
-import { signInFormSchema, signUpFormSchema, shippingAddressSchema, updateUserSchema, paymentMethodSchema } from "../validator";
-import { hashSync } from "bcrypt-ts-edge";
-import { prisma } from "@/db/prisma";
-import { formatError } from "../utils";
-import { ShippingAddress } from "@/types";
-import { z } from "zod";
-import { Prisma } from "@prisma/client";
-import { getMyCart } from "./cart.actions";
+import { isRedirectError } from 'next/dist/client/components/redirect-error';
+import { auth, signIn, signOut } from '@/auth';
+import {
+  signInFormSchema,
+  signUpFormSchema,
+  shippingAddressSchema,
+  updateUserSchema,
+  paymentMethodSchema,
+} from '../validator';
+import { hashSync } from 'bcrypt-ts-edge';
+import { prisma } from '@/db/prisma';
+import { formatError } from '../utils';
+import { ShippingAddress } from '@/types';
+import { z } from 'zod';
+import { Prisma } from '@prisma/client';
+import { getMyCart } from './cart.actions';
 
 // Sign in the user with credentials
 export async function signInWithCredentials(
-    prevState: unknown,
-    formData: FormData
-  ) {
-    try {
-      const user = signInFormSchema.parse({
-        email: formData.get('email'),
-        password: formData.get('password'),
-      });
-  
-      await signIn('credentials', user);
-  
-      return { success: true, message: 'Signed in successfully' };
-    } catch (error) {
-      if (isRedirectError(error)) {
-        throw error;
-      }
-  
-      return { success: false, 
-        message: formatError(error), };
-    }
-  }
+  prevState: unknown,
+  formData: FormData
+) {
+  try {
+    const user = signInFormSchema.parse({
+      email: formData.get('email'),
+      password: formData.get('password'),
+    });
 
-  // Sign the user out
+    await signIn('credentials', user);
+
+    return { success: true, message: 'Signed in successfully' };
+  } catch (error) {
+    if (isRedirectError(error)) {
+      throw error;
+    }
+
+    return { success: false, message: formatError(error) };
+  }
+}
+
+// Sign the user out
 export async function signOutUser() {
   // get current users cart and delete it so it does not persist to next user
   const currentCart = await getMyCart();
@@ -46,9 +51,9 @@ export async function signOutUser() {
     console.warn('No cart found for deletion.');
   }
   await signOut();
-  }
+}
 
-  // Register a new user
+// Register a new user
 export async function signUp(prevState: unknown, formData: FormData) {
   try {
     const user = signUpFormSchema.parse({
@@ -146,6 +151,37 @@ export async function updateUserPaymentMethod(
     await prisma.user.update({
       where: { id: currentUser.id },
       data: { paymentMethod: paymentMethod.type },
+    });
+
+    return {
+      success: true,
+      message: 'User updated successfully',
+    };
+  } catch (error) {
+    return { success: false, message: formatError(error) };
+  }
+}
+
+// Update User Profile
+export async function updateProfile(user: { name: string; email: string }) {
+  try {
+    const session = await auth();
+
+    const currentUser = await prisma.user.findFirst({
+      where: {
+        id: session?.user.id,
+      },
+    });
+
+    if (!currentUser) throw new Error('User not found');
+
+    await prisma.user.update({
+      where: {
+        id: currentUser.id,
+      },
+      data: {
+        name: user.name,
+      },
     });
 
     return {
