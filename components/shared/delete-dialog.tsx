@@ -23,7 +23,6 @@ export default function DeleteDialog({
 }) {
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
-  // const { toast } = useToast();
 
   // Handle delete order button click
   const handleDeleteClick = () => {
