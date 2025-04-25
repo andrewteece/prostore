@@ -9,7 +9,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { getAllProducts } from '@/lib/actions/product.actions';
+import { getAllProducts, deleteProduct } from '@/lib/actions/product.actions';
+import DeleteDialog from '@/components/shared/delete-dialog';
 import { formatCurrency, formatId } from '@/lib/utils';
 import { requireAdmin } from '@/lib/auth-guard';
 
@@ -72,6 +73,7 @@ const AdminProductsPage = async (props: {
                     <Link href={`/admin/products/${product.id}`}>Edit</Link>
                   </Button>
                   {/* DELETE HERE */}
+                  <DeleteDialog id={product.id} action={deleteProduct} />
                 </TableCell>
               </TableRow>
             ))}
