@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { productDefaultValues } from '@/lib/constants';
 import { insertProductSchema, updateProductSchema } from '@/lib/validator';
@@ -35,7 +35,7 @@ const ProductForm = ({
   product?: Product;
   productId?: string;
 }) => {
-  const router = useRouter;
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof insertProductSchema>>({
     resolver:
@@ -46,9 +46,52 @@ const ProductForm = ({
       product && type === 'Update' ? product : productDefaultValues,
   });
 
+  // Handle form submit
+  const onSubmit: SubmitHandler<z.infer<typeof insertProductSchema>> = async (
+    values
+  ) => {
+    if (type === 'Create') {
+      const res = await createProduct(values);
+
+      if (!res.success) {
+        toast.success('Submit failed', {
+          description: res.message,
+        });
+      } else {
+        toast.success('Submit successful', {
+          description: res.message,
+        });
+        router.push(`/admin/products`);
+      }
+    }
+
+    // on update
+    if (type === 'Update') {
+      if (!productId) {
+        router.push(`/admin/products`);
+        return;
+      }
+
+      const res = await updateProduct({ ...values, id: productId });
+
+      if (!res.success) {
+        toast.success('Update failes', {
+          variant: 'destructive',
+          description: res.message,
+        });
+      } else {
+        router.push(`/admin/products`);
+      }
+    }
+  };
+
   return (
     <Form {...form}>
-      <form className='space-y-8'>
+      <form
+        method='post'
+        onSubmit={form.handleSubmit(onSubmit)}
+        className='space-y-8'
+      >
         <div className='flex flex-col gap-5 md:flex-row'>
           {/* Name */}
           <FormField
