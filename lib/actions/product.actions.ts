@@ -1,7 +1,7 @@
 'use server';
 import { prisma } from '@/db/prisma';
 import { Prisma } from '@prisma/client';
-import { convertToPlainObject } from '../utils';
+import { convertToPlainObject, formatError } from '../utils';
 import { LATEST_PRODUCTS_LIMIT, PAGE_SIZE } from '../constants';
 import { revalidatePath } from 'next/cache';
 import { insertProductSchema, updateProductSchema } from '../validator';
