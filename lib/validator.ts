@@ -58,6 +58,7 @@ export const updateProfileSchema = z.object({
 export const updateUserSchema = updateProfileSchema.extend({
   id: z.string().min(1, 'ID is required'),
   role: z.string().min(1, 'Role is required'),
+  name: z.string().min(3, 'Name must be at least 3 characters'),
 });
 
 // cart schemas
