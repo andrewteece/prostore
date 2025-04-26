@@ -21,10 +21,9 @@ import { toast } from 'sonner';
 import { updateUser } from '@/lib/actions/user.actions';
 import { USER_ROLES } from '@/lib/constants';
 import { updateUserSchema } from '@/lib/validator';
-import { ControllerRenderProps } from 'react-hook-form';
+import { ControllerRenderProps, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 const updateUserForm = ({
@@ -69,7 +68,11 @@ const updateUserForm = ({
 
   return (
     <Form {...form}>
-      <form method='POST' onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        method='POST'
+        onSubmit={form.handleSubmit(onSubmit)}
+        className='space-y-4'
+      >
         {/* Email */}
         <div>
           <FormField
