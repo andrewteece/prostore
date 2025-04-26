@@ -16,6 +16,7 @@ import { ShippingAddress } from '@/types';
 import { z } from 'zod';
 import { Prisma } from '@prisma/client';
 import { getMyCart } from './cart.actions';
+import { PAGE_SIZE } from '../constants';
 
 // Sign in the user with credentials
 export async function signInWithCredentials(
@@ -82,11 +83,6 @@ export async function signUp(prevState: unknown, formData: FormData) {
 
     return { success: true, message: 'User registered successfully' };
   } catch (error) {
-    // console.log(error.name);
-    // console.log(error.code);
-    // console.log(error.errors);
-    // console.log(error.meta?.target);
-
     if (isRedirectError(error)) {
       throw error;
     }
@@ -191,4 +187,26 @@ export async function updateProfile(user: { name: string; email: string }) {
   } catch (error) {
     return { success: false, message: formatError(error) };
   }
+}
+
+// Get all users
+export async function getAllUsers({
+  limit = PAGE_SIZE,
+  page,
+}: {
+  limit?: number;
+  page: number;
+}) {
+  const data = await prisma.user.findMany({
+    orderBy: { createdAt: 'desc' },
+    take: limit,
+    skip: (page - 1) * limit,
+  });
+
+  const dataCount = await prisma.user.count();
+
+  return {
+    data,
+    totalPages: Math.ceil(dataCount / limit),
+  };
 }
