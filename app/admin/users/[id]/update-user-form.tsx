@@ -21,18 +21,18 @@ import { toast } from 'sonner';
 import { updateUser } from '@/lib/actions/user.actions';
 import { USER_ROLES } from '@/lib/constants';
 import { updateUserSchema } from '@/lib/validator';
-import { ControllerRenderProps, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
+import { ControllerRenderProps, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-const updateUserForm = ({
+const UpdateUserForm = ({
   user,
 }: {
   user: z.infer<typeof updateUserSchema>;
 }) => {
   const router = useRouter();
-  // const { toast } = useToast();
+  //   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof updateUserSchema>>({
     resolver: zodResolver(updateUserSchema),
@@ -47,20 +47,18 @@ const updateUserForm = ({
       });
 
       if (!res.success) {
-        return toast.error({
-          variant: 'destructive',
+        return toast.error('error', {
           description: res.message,
         });
       }
 
-      toast.success({
+      toast.success('Success', {
         description: res.message,
       });
       form.reset();
       router.push('/admin/users');
     } catch (error) {
-      toast.error({
-        variant: 'destructive',
+      toast.error('Error', {
         description: (error as Error).message,
       });
     }
@@ -68,11 +66,7 @@ const updateUserForm = ({
 
   return (
     <Form {...form}>
-      <form
-        method='POST'
-        onSubmit={form.handleSubmit(onSubmit)}
-        className='space-y-4'
-      >
+      <form method='POST' onSubmit={form.handleSubmit(onSubmit)}>
         {/* Email */}
         <div>
           <FormField
@@ -124,7 +118,6 @@ const updateUserForm = ({
           />
         </div>
         {/* Role */}
-
         <div>
           <FormField
             control={form.control}
@@ -137,7 +130,7 @@ const updateUserForm = ({
                 'role'
               >;
             }) => (
-              <FormItem className=' items-center'>
+              <FormItem className='w-full'>
                 <FormLabel>Role</FormLabel>
                 <Select
                   onValueChange={field.onChange}
@@ -151,7 +144,7 @@ const updateUserForm = ({
                   <SelectContent>
                     {USER_ROLES.map((role) => (
                       <SelectItem key={role} value={role}>
-                        {role}
+                        {role.charAt(0).toUpperCase() + role.slice(1)}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -161,13 +154,13 @@ const updateUserForm = ({
             )}
           />
         </div>
-        <div className='flex-between'>
+        <div className='flex-between mt-6'>
           <Button
             type='submit'
             className='w-full'
             disabled={form.formState.isSubmitting}
           >
-            {form.formState.isSubmitting ? 'Submitting...' : `Update User `}
+            {form.formState.isSubmitting ? 'Submitting...' : 'Update User'}
           </Button>
         </div>
       </form>
@@ -175,4 +168,4 @@ const updateUserForm = ({
   );
 };
 
-export default updateUserForm;
+export default UpdateUserForm;

@@ -24,6 +24,8 @@ const AdminUserPage = async (props: {
     page: string;
   }>;
 }) => {
+  await requireAdmin();
+
   const searchParams = await props.searchParams;
 
   const { page = '1' } = searchParams;
