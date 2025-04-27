@@ -87,7 +87,7 @@ const OrderDetailsTable = ({
   // Button To mark the order as paid
   const MarkAsPaidButton = () => {
     const [isPending, startTransition] = useTransition();
-    // const { toast } = useToast();
+
     return (
       <Button
         type='button'
@@ -95,8 +95,7 @@ const OrderDetailsTable = ({
         onClick={() =>
           startTransition(async () => {
             const res = await updateOrderToPaidByCOD(order.id);
-            toast.success('Order paid', {
-              // variant: res.success ? 'default' : 'destructive',
+            toast.success('Success', {
               description: res.message,
             });
           })
@@ -109,7 +108,7 @@ const OrderDetailsTable = ({
 
   const MarkAsDeliveredButton = () => {
     const [isPending, startTransition] = useTransition();
-    // const { toast } = useToast();
+
     return (
       <Button
         type='button'
@@ -117,8 +116,7 @@ const OrderDetailsTable = ({
         onClick={() =>
           startTransition(async () => {
             const res = await deliverOrder(order.id);
-            toast.success('Order ready for delivery', {
-              // variant: res.success ? 'default' : 'destructive',
+            toast.success('Success', {
               description: res.message,
             });
           })

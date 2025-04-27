@@ -44,8 +44,7 @@ const PaymentMethodForm = ({
       const res = await updateUserPaymentMethod(values);
 
       if (!res.success) {
-        toast.success({
-          variant: 'destructive',
+        toast.success('Success', {
           description: res.message,
         });
 
