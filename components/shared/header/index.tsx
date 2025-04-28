@@ -1,19 +1,21 @@
 //import { ShoppingCart, UserIcon } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+import Image from 'next/image';
+import Link from 'next/link';
 
 //import { Button } from "@/components/ui/button";
-import { APP_NAME } from "@/lib/constants/index";
-import Menu from "./menu";
+import { APP_NAME } from '@/lib/constants/index';
+import Menu from './menu';
 
-import ModeToggle from "./mode-toggle";
+import ModeToggle from './mode-toggle';
+import CategoriesDrawer from './categories-drawer';
 
 const Header = () => {
-    return (
-      <header className='w-full border-b'>
+  return (
+    <header className='w-full border-b'>
       <div className='wrapper flex-between'>
         <div className='flex-start'>
-          <Link href='/' className='flex-start'>
+          <CategoriesDrawer />
+          <Link href='/' className='flex-start ml-4'>
             <Image
               priority={true}
               src='/images/logo.svg'
@@ -29,7 +31,7 @@ const Header = () => {
         <Menu />
       </div>
     </header>
-    );
-  };
-  
-  export default Header;
+  );
+};
+
+export default Header;
