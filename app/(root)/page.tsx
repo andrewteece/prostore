@@ -6,6 +6,8 @@ import {
   getFeaturedProducts,
 } from '@/lib/actions/product.actions';
 import { ProductCarousel } from '@/components/shared/product/product-carousel';
+import ViewAllProductsButton from '@/components/view-all-products-button';
+import { View } from 'lucide-react';
 
 const HomePage = async () => {
   const latestProducts = await getLatestProducts();
@@ -18,6 +20,7 @@ const HomePage = async () => {
         <ProductCarousel data={featuredProducts} />
       )}
       <ProductList data={latestProducts} title='Newest Arrivals' />
+      <ViewAllProductsButton />
     </>
   );
 };
