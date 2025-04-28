@@ -8,6 +8,7 @@ import Menu from './menu';
 
 import ModeToggle from './mode-toggle';
 import CategoriesDrawer from './categories-drawer';
+import Search from './search';
 
 const Header = () => {
   return (
@@ -27,6 +28,9 @@ const Header = () => {
               {APP_NAME}
             </span>
           </Link>
+        </div>
+        <div className='hidden md:block'>
+          <Search />
         </div>
         <Menu />
       </div>
