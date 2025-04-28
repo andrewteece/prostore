@@ -121,6 +121,30 @@ const SearchPage = async (props: {
             ))}
           </ul>
         </div>
+        {/* Price Links */}
+        <div>
+          <div className='text-xl mt-8 mb-2'>Price</div>
+          <ul className='space-y-1'>
+            <li>
+              <Link
+                className={`  ${'all' === price && 'font-bold'}`}
+                href={getFilterUrl({ p: 'all' })}
+              >
+                Any
+              </Link>
+            </li>
+            {prices.map((p) => (
+              <li key={p.value}>
+                <Link
+                  href={getFilterUrl({ p: p.value })}
+                  className={`${p.value === price && 'font-bold'}`}
+                >
+                  {p.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
 
       <div className='md:col-span-4 space-y-4'>
