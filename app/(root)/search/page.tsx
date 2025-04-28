@@ -36,6 +36,10 @@ const SearchPage = async (props: {
     sort,
   });
 
+  // Filter by rating
+  const ratingFilter =
+    rating && rating !== 'all' ? { rating: { gte: Number(rating) } } : {};
+
   console.log(q, category, price, rating, sort, page);
 
   return (
