@@ -15,6 +15,7 @@ import Link from 'next/link';
 import ReviewForm from './review-form';
 import { getReviews } from '@/lib/actions/review-actions';
 import Rating from '@/components/shared/product/rating';
+import { toast } from 'sonner';
 
 const ReviewList = ({
   userId,
@@ -37,11 +38,29 @@ const ReviewList = ({
     loadReviews();
   }, [productId]);
 
+  // Reload reviews when a review is submitted
+  const reload = async () => {
+    try {
+      const res = await getReviews({ productId });
+      setReviews([...res.data]);
+    } catch (err) {
+      console.log(err);
+      toast.error({
+        // variant: 'destructive',
+        description: 'Error in fetching reviews',
+      });
+    }
+  };
+
   return (
     <div className='space-y-4'>
       {reviews.length === 0 && <div>No reviews yet</div>}
       {userId ? (
-        <ReviewForm userId={userId} productId={productId} />
+        <ReviewForm
+          userId={userId}
+          productId={productId}
+          onReviewSubmitted={reload}
+        />
       ) : (
         <div>
           Please{' '}

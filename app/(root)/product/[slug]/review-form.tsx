@@ -82,19 +82,14 @@ const ReviewForm = ({
     const res = await createUpdateReview({ ...values, productId });
 
     if (!res.success) {
-      return toast.error({
-        // variant: 'destructive',
-        description: res.message,
-      });
+      return toast.error('Error');
     }
 
     setOpen(false);
 
     onReviewSubmitted();
 
-    toast.success({
-      description: res.message,
-    });
+    toast.success('Success');
   };
 
   return (
