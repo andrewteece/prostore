@@ -9,7 +9,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 export async function POST(req: NextRequest) {
   // Construct the event using the raw request body, the Stripe signature header, and the webhook secret.
   // This ensures that the request is indeed from Stripe and has not been tampered with.
-  const event = await stripe.webhooks.constructEvent(
+  const event = await Stripe.webhooks.constructEvent(
     await req.text(),
     req.headers.get('stripe-signature') as string,
     process.env.STRIPE_WEBHOOK_SECRET as string
