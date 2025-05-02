@@ -26,7 +26,7 @@ import {
   approvePayPalOrder,
   createPayPalOrder,
   deliverOrder,
-  updateOrderToPaidByCOD,
+  updateOrderToPaidCOD,
 } from '@/lib/actions/order.actions';
 import StripePayment from './stripe-payment';
 
@@ -36,7 +36,7 @@ const OrderDetailsTable = ({
   isAdmin,
   stripeClientSecret,
 }: {
-  order: Order;
+  order: Omit<Order, 'paymentResult'>;
   paypalClientId: string;
   isAdmin: boolean;
   stripeClientSecret: string | null;
@@ -96,7 +96,7 @@ const OrderDetailsTable = ({
         disabled={isPending}
         onClick={() =>
           startTransition(async () => {
-            const res = await updateOrderToPaidByCOD(order.id);
+            const res = await updateOrderToPaidCOD(order.id);
             toast.success('Success', {
               description: res.message,
             });

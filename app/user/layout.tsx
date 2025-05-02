@@ -3,7 +3,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Menu from '@/components/shared/header/menu';
 import MainNav from './main-nav';
-import { Main } from 'next/document';
 
 export default function UserLayout({
   children,
