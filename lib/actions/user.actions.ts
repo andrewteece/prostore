@@ -21,7 +21,7 @@ import { revalidatePath } from 'next/cache';
 
 // Sign in the user with credentials
 export async function signInWithCredentials(
-  prevState: unknown,
+  prevState: { success: boolean; message: string },
   formData: FormData
 ) {
   try {
@@ -37,7 +37,6 @@ export async function signInWithCredentials(
     if (isRedirectError(error)) {
       throw error;
     }
-
     return { success: false, message: formatError(error) };
   }
 }
