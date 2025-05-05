@@ -55,7 +55,10 @@ export async function signOutUser() {
 }
 
 // Register a new user
-export async function signUp(prevState: unknown, formData: FormData) {
+export async function signUp(
+  prevState: { success: boolean; message: string },
+  formData: FormData
+) {
   try {
     const user = signUpFormSchema.parse({
       name: formData.get('name'),
