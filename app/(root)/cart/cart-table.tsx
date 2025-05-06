@@ -33,8 +33,7 @@ function AddButton({ item }: { item: CartItem }) {
           const res = await addItemToCart(item);
 
           if (!res.success) {
-            toast.success({
-              variant: 'destructive',
+            toast.success('', {
               description: res.message,
             });
           }
@@ -63,8 +62,7 @@ function RemoveButton({ item }: { item: CartItem }) {
           const res = await removeItemFromCart(item.productId);
 
           if (!res.success) {
-            toast.success({
-              variant: 'destructive',
+            toast.success('', {
               description: res.message,
             });
           }
@@ -130,8 +128,7 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
                               item.productId
                             );
                             if (!res.success) {
-                              toast.success({
-                                variant: 'destructive',
+                              toast.success('', {
                                 description: res.message,
                               });
                             }
@@ -153,8 +150,7 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
                           startTransition(async () => {
                             const res = await addItemToCart(item);
                             if (!res.success) {
-                              toast.success({
-                                variant: 'destructive',
+                              toast.success('', {
                                 description: res.message,
                               });
                             }
