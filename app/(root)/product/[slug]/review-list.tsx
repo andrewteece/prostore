@@ -45,8 +45,7 @@ const ReviewList = ({
       setReviews([...res.data]);
     } catch (err) {
       console.log(err);
-      toast.error({
-        // variant: 'destructive',
+      toast.error('', {
         description: 'Error in fetching reviews',
       });
     }
