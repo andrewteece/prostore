@@ -46,8 +46,7 @@ const ShippingAddressFrom = ({
       const res = await updateUserAddress(values);
 
       if (!res.success) {
-        toast.success({
-          variant: 'destructive',
+        toast.error('', {
           description: res.message,
         });
         return;
