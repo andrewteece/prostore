@@ -27,13 +27,11 @@ const ProfileForm = () => {
     },
   });
 
-  //   const { toast } = useToast();
-
   const onSubmit = async (values: z.infer<typeof updateProfileSchema>) => {
     const res = await updateProfile(values);
 
     if (!res.success) {
-      return toast.success('Update failed', {
+      return toast.error('Update failed', {
         description: res.message,
       });
     }
