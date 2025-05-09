@@ -17,10 +17,6 @@ import { Order } from '@/types';
 import sampleData from '@/db/sample-data';
 require('dotenv').config();
 
-type OrderInformationProps = {
-  order: Order;
-};
-
 PurchaseReceiptEmail.PreviewProps = {
   order: {
     id: crypto.randomUUID(),
