@@ -168,7 +168,7 @@ export async function updateProfile(user: { name: string; email: string }) {
 
     const currentUser = await prisma.user.findFirst({
       where: {
-        id: session?.user.id,
+        id: session?.user?.id,
       },
     });
 
