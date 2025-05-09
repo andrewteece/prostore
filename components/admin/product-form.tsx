@@ -1,11 +1,11 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { productDefaultValues } from '@/lib/constants';
 import { insertProductSchema, updateProductSchema } from '@/lib/validator';
 import { Product } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import { ControllerRenderProps, SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import {
@@ -16,8 +16,8 @@ import {
   FormLabel,
   FormMessage,
 } from '../ui/form';
-import { Input } from '../ui/input';
 import slugify from 'slugify';
+import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { Textarea } from '../ui/textarea';
 import { createProduct, updateProduct } from '@/lib/actions/product.actions';
@@ -36,6 +36,7 @@ const ProductForm = ({
   productId?: string;
 }) => {
   const router = useRouter();
+  // const { toast } = useToast();
 
   const form = useForm<z.infer<typeof insertProductSchema>>({
     resolver:
@@ -46,58 +47,59 @@ const ProductForm = ({
       product && type === 'Update' ? product : productDefaultValues,
   });
 
-  // Handle form submit
   const onSubmit: SubmitHandler<z.infer<typeof insertProductSchema>> = async (
     values
   ) => {
+    // On Create
     if (type === 'Create') {
       const res = await createProduct(values);
 
       if (!res.success) {
-        toast.success('Submit failed', {
+        toast.success('', {
           description: res.message,
         });
       } else {
-        toast.success('Submit successful', {
+        toast.success('', {
           description: res.message,
         });
-        router.push(`/admin/products`);
+        router.push('/admin/products');
       }
     }
 
-    // on update
+    // On Update
     if (type === 'Update') {
       if (!productId) {
-        router.push(`/admin/products`);
+        router.push('/admin/products');
         return;
       }
 
       const res = await updateProduct({ ...values, id: productId });
 
       if (!res.success) {
-        toast.success('Update failed', {
-          variant: 'destructive',
+        toast.error('', {
           description: res.message,
         });
       } else {
-        router.push(`/admin/products`);
+        toast.success('', {
+          description: res.message,
+        });
+        router.push('/admin/products');
       }
     }
   };
 
   const images = form.watch('images');
-
   const isFeatured = form.watch('isFeatured');
   const banner = form.watch('banner');
 
   return (
     <Form {...form}>
       <form
-        method='post'
+        method='POST'
         onSubmit={form.handleSubmit(onSubmit)}
         className='space-y-8'
       >
-        <div className='flex flex-col gap-5 md:flex-row'>
+        <div className='flex flex-col md:flex-row gap-5'>
           {/* Name */}
           <FormField
             control={form.control}
@@ -132,18 +134,13 @@ const ProductForm = ({
               >;
             }) => (
               <FormItem className='w-full'>
-                <FormLabel>Slug</FormLabel>
+                <FormLabel>Name</FormLabel>
                 <FormControl>
                   <div className='relative'>
-                    <Input
-                      placeholder='Enter product slug'
-                      className='pl-8'
-                      {...field}
-                    />
-                    {/* Generate Button */}
-                    <button
+                    <Input placeholder='Enter slug' {...field} />
+                    <Button
                       type='button'
-                      className='bg-gray-500 text-white px-4 py-1 mt-2 hover:bg-gray-600'
+                      className='bg-gray-500 hover:bg-gray-600 text-white px-4 py-1 mt-2'
                       onClick={() => {
                         form.setValue(
                           'slug',
@@ -152,7 +149,7 @@ const ProductForm = ({
                       }}
                     >
                       Generate
-                    </button>
+                    </Button>
                   </div>
                 </FormControl>
                 <FormMessage />
@@ -160,7 +157,7 @@ const ProductForm = ({
             )}
           />
         </div>
-        <div className='flex flex-col gap-5 md:flex-row'>
+        <div className='flex flex-col md:flex-row gap-5'>
           {/* Category */}
           <FormField
             control={form.control}
@@ -197,14 +194,14 @@ const ProductForm = ({
               <FormItem className='w-full'>
                 <FormLabel>Brand</FormLabel>
                 <FormControl>
-                  <Input placeholder='Enter product brand' {...field} />
+                  <Input placeholder='Enter brand' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
-        <div className='flex flex-col gap-5 md:flex-row'>
+        <div className='flex flex-col md:flex-row gap-5'>
           {/* Price */}
           <FormField
             control={form.control}
@@ -226,7 +223,7 @@ const ProductForm = ({
               </FormItem>
             )}
           />
-          {/* Stock  */}
+          {/* Stock */}
           <FormField
             control={form.control}
             name='stock'
@@ -241,18 +238,14 @@ const ProductForm = ({
               <FormItem className='w-full'>
                 <FormLabel>Stock</FormLabel>
                 <FormControl>
-                  <Input
-                    type='number'
-                    placeholder='Enter product stock'
-                    {...field}
-                  />
+                  <Input placeholder='Enter stock' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
-        <div className='upload-field flex flex-col gap-5 md:flex-row'>
+        <div className='upload-field flex flex-col md:flex-row gap-5'>
           {/* Images */}
           <FormField
             control={form.control}
@@ -280,7 +273,7 @@ const ProductForm = ({
                             form.setValue('images', [...images, res[0].url]);
                           }}
                           onUploadError={(error: Error) => {
-                            toast.success('Upload failed', {
+                            toast({
                               variant: 'destructive',
                               description: `ERROR! ${error.message}`,
                             });
@@ -296,52 +289,51 @@ const ProductForm = ({
           />
         </div>
         <div className='upload-field'>
-          {/* Is Featured */}
-          <div className='upload-field'>
-            Featured Product
-            <Card>
-              <CardContent className='space-y-2 mt-2  '>
-                <FormField
-                  control={form.control}
-                  name='isFeatured'
-                  render={({ field }) => (
-                    <FormItem className='space-x-2 items-center'>
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <FormLabel>Is Featured?</FormLabel>
-                    </FormItem>
-                  )}
+          {/* isFeatured */}
+          Featured Product
+          <Card>
+            <CardContent className='space-y-2 mt-2'>
+              <FormField
+                control={form.control}
+                name='isFeatured'
+                render={({ field }) => (
+                  <FormItem className='space-x-2 items-center'>
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormLabel>Is Featured?</FormLabel>
+                  </FormItem>
+                )}
+              />
+              {isFeatured && banner && (
+                <Image
+                  src={banner}
+                  alt='banner image'
+                  className='w-full object-cover object-center rounded-sm'
+                  width={1920}
+                  height={680}
                 />
-                {isFeatured && banner && (
-                  <Image
-                    src={banner}
-                    alt='banner image'
-                    className=' w-full object-cover object-center rounded-sm'
-                    width={1920}
-                    height={680}
-                  />
-                )}
-                {isFeatured && !banner && (
-                  <UploadButton
-                    endpoint='imageUploader'
-                    onClientUploadComplete={(res: { url: string }[]) => {
-                      form.setValue('banner', res[0].url);
-                    }}
-                    onUploadError={(error: Error) => {
-                      toast.success({
-                        variant: 'destructive',
-                        description: `ERROR! ${error.message}`,
-                      });
-                    }}
-                  />
-                )}
-              </CardContent>
-            </Card>
-          </div>
+              )}
+
+              {isFeatured && !banner && (
+                <UploadButton
+                  endpoint='imageUploader'
+                  onClientUploadComplete={(res: { url: string }[]) => {
+                    form.setValue('banner', res[0].url);
+                  }}
+                  onUploadError={(error: Error) => {
+                    toast({
+                      variant: 'destructive',
+                      description: `ERROR! ${error.message}`,
+                    });
+                  }}
+                />
+              )}
+            </CardContent>
+          </Card>
         </div>
         <div>
           {/* Description */}
@@ -371,7 +363,6 @@ const ProductForm = ({
           />
         </div>
         <div>
-          {/* Submit */}
           <Button
             type='submit'
             size='lg'
