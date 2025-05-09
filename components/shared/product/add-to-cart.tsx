@@ -61,7 +61,6 @@ const AddToCart = ({
       const res = await removeItemFromCart(item.productId);
 
       toast.success('Item Removed', {
-        variant: res.success ? 'default' : 'destructive',
         description: res.message,
       });
 
