@@ -272,8 +272,7 @@ const ProductForm = ({
                             form.setValue('images', [...images, res[0].url]);
                           }}
                           onUploadError={(error: Error) => {
-                            toast({
-                              variant: 'destructive',
+                            toast.error('', {
                               description: `ERROR! ${error.message}`,
                             });
                           }}
