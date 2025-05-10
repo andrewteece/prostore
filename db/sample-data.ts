@@ -1,5 +1,4 @@
-import { hashSync } from "bcrypt-ts-edge";
-
+import { hashSync } from 'bcrypt-ts-edge';
 
 const sampleData = {
   users: [
@@ -26,7 +25,7 @@ const sampleData = {
         '/images/sample-products/p1-1.jpg',
         '/images/sample-products/p1-2.jpg',
       ],
-      price: 59.99,
+      price: '59.99',
       brand: 'Polo',
       rating: 4.5,
       numReviews: 10,
@@ -43,7 +42,7 @@ const sampleData = {
         '/images/sample-products/p2-1.jpg',
         '/images/sample-products/p2-2.jpg',
       ],
-      price: 85.9,
+      price: '85.9',
       brand: 'Brooks Brothers',
       rating: 4.2,
       numReviews: 8,
@@ -60,7 +59,7 @@ const sampleData = {
         '/images/sample-products/p3-1.jpg',
         '/images/sample-products/p3-2.jpg',
       ],
-      price: 99.95,
+      price: '99.95',
       brand: 'Tommy Hilfiger',
       rating: 4.9,
       numReviews: 3,
@@ -77,7 +76,7 @@ const sampleData = {
         '/images/sample-products/p4-1.jpg',
         '/images/sample-products/p4-2.jpg',
       ],
-      price: 39.95,
+      price: '39.95',
       brand: 'Calvin Klein',
       rating: 3.6,
       numReviews: 5,
@@ -94,7 +93,7 @@ const sampleData = {
         '/images/sample-products/p5-1.jpg',
         '/images/sample-products/p5-2.jpg',
       ],
-      price: 79.99,
+      price: '79.99',
       brand: 'Polo',
       rating: 4.7,
       numReviews: 18,
@@ -111,7 +110,7 @@ const sampleData = {
         '/images/sample-products/p6-1.jpg',
         '/images/sample-products/p6-2.jpg',
       ],
-      price: 99.99,
+      price: '99.99',
       brand: 'Polo',
       rating: 4.6,
       numReviews: 12,
